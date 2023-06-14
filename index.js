@@ -35,7 +35,13 @@ app.get('/api/:date?', (req, res) => {
     timestamp = new Date();
   } else {
     // Intenta analizar la fecha proporcionada
-    timestamp = new Date(date);
+    if (!isNaN(date)) {
+      // Si el parámetro es un número, considerarlo como un timestamp en milisegundos
+      timestamp = new Date(parseInt(date));
+    } else {
+      // Si el parámetro no es un número, considerarlo como una cadena de fecha
+      timestamp = new Date(date);
+    }
   }
 
   if (isNaN(timestamp.getTime())) {
